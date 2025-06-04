@@ -1,7 +1,33 @@
 import sqlite3
-
 def connect_db():
     return sqlite3.connect("recipes.db")
+
+def create_tables():
+    conn = sqlite3.connect("recipes.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Recipes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        category TEXT,
+        date_added DATE DEFAULT (date('now'))
+    )
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS Ingredients (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        recipe_id INTEGER,
+        name TEXT NOT NULL,
+        quantity TEXT,
+        FOREIGN KEY (recipe_id) REFERENCES Recipes(id)
+    )
+    """)
+
+    conn.commit()
+    conn.close()
+
 
 def add_recipe():
     name = input("Recipe name: ")
@@ -21,6 +47,7 @@ def add_recipe():
                        (recipe_id, ingredient, quantity))
 
     conn.commit()
+
     conn.close()
     print("Recipe added successfully!\n")
 
@@ -68,6 +95,7 @@ def delete_recipe():
     print("Recipe deleted successfully.\n")
 
 def main():
+    create_tables()
     while True:
         print("\n--- Recipe Manager ---")
         print("1. Add Recipe")
