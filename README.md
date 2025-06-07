@@ -5,8 +5,7 @@ The program is written in Python and integrates with a SQLite relational databas
 
 This project helped me deepen my understanding of SQL syntax, Python’s `sqlite3` module, and how to manage persistent data storage.
 
-[Software Demo Video](http://youtube.link.goes.here)
-
+[Software Demo Video](https://youtu.be/LoZ83ZykMEc)
 # Relational Database
 
 The software uses a **SQLite** relational database called `recipes.db`. It consists of two related tables:
