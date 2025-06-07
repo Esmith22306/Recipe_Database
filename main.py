@@ -1,7 +1,13 @@
 import sqlite3
+
+
+# Opens a connection to SQLite database named recipes.db 
+# If the file doesent exist SQLite will create it. 
 def connect_db():
     return sqlite3.connect("recipes.db")
 
+
+# Create two tables if they dont already exist. 
 def create_tables():
     conn = sqlite3.connect("recipes.db")
     cursor = conn.cursor()
@@ -29,6 +35,9 @@ def create_tables():
     conn.close()
 
 
+# User Prompt for entering a recipe name and category. 
+# Inserts that into the recipes table. 
+# Then prompts the user to enter multiple ingredients ("Until they type done")
 def add_recipe():
     name = input("Recipe name: ")
     category = input("Category (e.g. Dessert, Main, etc.): ")
@@ -51,6 +60,7 @@ def add_recipe():
     conn.close()
     print("Recipe added successfully!\n")
 
+# Loops through results grouping by recipe ID.
 def view_recipes():
     conn = connect_db()
     cursor = conn.cursor()
@@ -73,6 +83,8 @@ def view_recipes():
         if ingredient:
             print(f"  - {ingredient} ({quantity})")
 
+
+# Asks for a recipe ID, a new name and a new category. 
 def update_recipe():
     recipe_id = input("Enter recipe ID to update: ")
     new_name = input("New recipe name: ")
@@ -84,6 +96,9 @@ def update_recipe():
     conn.close()
     print("Recipe updated successfully.\n")
 
+
+# Asks for recipe ID and deletes all related entries from the ingrediants table 
+# Deletes the recipe from the recipes table
 def delete_recipe():
     recipe_id = input("Enter recipe ID to delete: ")
     conn = connect_db()
@@ -94,6 +109,9 @@ def delete_recipe():
     conn.close()
     print("Recipe deleted successfully.\n")
 
+
+# Loop with 5 options displayed
+# Each input calls a different function
 def main():
     create_tables()
     while True:
